@@ -1,9 +1,29 @@
 document.addEventListener('DOMContentLoaded', main)
 
 async function main(params) {
-  const result = await listCharacterByPage();
+  loadMainContent(1);
+  renderFooterData();
+}
 
-  renderCharactersList(result.charactersList);
+async function loadMainContent(page) {
+  const result = await listCharacterByPage(page);
+
+  const characters = [...result.charactersList];
+
+  for (const character of characters) {
+    const lastEpisodeUrl = character.episode[character.episode.length - 1];
+
+    const episodeName = await getEpisodeDataFromURL(lastEpisodeUrl);
+
+    character.episode = {
+      url: lastEpisodeUrl,
+      name: episodeName,
+    };
+  }
+
+  renderCharactersList(characters);
+  renderPagination(result.prevPage, result.nextPage);
+
 }
 
 function renderCharactersList(characters) {
@@ -12,7 +32,7 @@ function renderCharactersList(characters) {
 
   for (const character of characters) {
     const card = `
-          <div class="card mb-3">
+          <div class="card mb-3 card-character">
             <div class="row g-0">
               <div class="col-12 col-md-5">
                 <div class="object-fit-fill border rounded h-100">
@@ -31,14 +51,14 @@ function renderCharactersList(characters) {
                   </p>
 
                   <p class="card-text">
-                    <small class="text-body-secondary">Última localização conhecida:</small>
+                    <small class="text-secondary">Última localização conhecida:</small>
                     <br>
-                    <small>Planeta XYZ</small>
+                    <small>${character.location.name}</small>
                   </p>
                   <p class="card-text">
-                    <small class="text-body-secondary">Visto a última vez em:</small>
+                    <small class="text-secondary">Visto a última vez em:</small>
                     <br>
-                    <small>Nome do episódio</small>
+                    <small>${character.episode.name}</small>
                   </p>
                 </div>
               </div>
@@ -51,6 +71,71 @@ function renderCharactersList(characters) {
     col.innerHTML = card;
     row.appendChild(col);
   }
+}
+
+async function renderFooterData() {
+  const totalCharacters = await getTotalByFeature ("character");
+  const totalLocations = await getTotalByFeature ("location");
+  const totalEpisodes = await getTotalByFeature ("episode");
+
+  const spanTotalCharacter = document.getElementById("total-characters");
+  spanTotalCharacter.innerText = totalCharacters;
+  const spanTotalLocations = document.getElementById("total-locations");
+  spanTotalLocations.innerText = totalLocations;
+  const spanTotalEpisodes = document.getElementById("total-episodes");
+    spanTotalEpisodes.innerText = totalEpisodes;
+
+
+  const spanDevName = document.getElementById("dev-name")
+  spanDevName.innerText = "Daniele K Santos"
+  const spanCurrentYear = document.getElementById("current-year");
+  spanCurrentYear.innerText = new Date().getFullYear();
+}
+
+function renderPagination(prevPage, nextPage) {
+  const prevPageNumber = !prevPage ? 0 : prevPage.split("?page=")[1];
+  const nextPageNumber = !nextPage ? 0 : nextPage.split("?page=")[1];
+
+  const nav = document.getElementById("pagination");
+  nav.innerHTML = "";
+
+  const ul = document.createElement("ul")
+  ul.classList.add("pagination", "justify-content-center");
+
+  const liPreviPage = document.createElement("li");
+  liPreviPage.classList.add("page-item");
+
+  if (!prevPage) {
+    liPreviPage.classList.add("disabled");
+  }
+
+  const buttonPrev = document.createElement("button")
+  buttonPrev.setAttribute("type", "button");
+  buttonPrev.classList.add("page-link");
+  buttonPrev.innerText = "Anterior";
+  buttonPrev.addEventListener("click", () => loadMainContent(prevPageNumber));
+
+  liPreviPage.appendChild(buttonPrev);
+
+  const liNextPage = document.createElement("li");
+  liNextPage.classList.add("page-item");
+
+  if (!nextPage) {
+    liNextPage.classList.add("disabled");
+  }
+
+  const buttonNext = document.createElement("button")
+  buttonNext.setAttribute("type", "button");
+  buttonNext.classList.add("page-link");
+  buttonNext.innerText = "Próximo";
+  buttonNext.addEventListener("click", () => loadMainContent(nextPageNumber));
+
+  liNextPage.appendChild(buttonNext);
+
+  ul.appendChild(liPreviPage);
+  ul.appendChild(liNextPage);
+
+  nav.appendChild(ul);
 }
 
 function mapStatus(characterStatus) {
