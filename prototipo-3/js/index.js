@@ -50,6 +50,13 @@ function renderCharactersList(characters) {
       nameCharacter = nameCharacter.slice(0, 18).concat("...");
     }
 
+    let episodeCharacterName = character.episode.name;
+
+    if (episodeCharacterName.length > 30) {
+      episodeCharacterName = episodeCharacterName.slice(0, 30).concat("...");
+    }
+    
+
     const card = `
       <div class="card mb-3 card-character" onclick="viewCharacterDetail(${character.id})">
         <div class="row g-0">
@@ -77,7 +84,7 @@ function renderCharactersList(characters) {
               <p class="card-text">
                 <small class="text-secondary">Visto a última vez em:</small>
                 <br>
-                <small>${character.episode.name}</small>
+                <small>${episodeCharacterName}</small>
               </p>
             </div>
           </div>

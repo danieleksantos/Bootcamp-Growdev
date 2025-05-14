@@ -41,12 +41,7 @@ footer {
     padding-bottom: 600px;
 }
 
-@media (max-width: 777px) {
-    .detail {
-    background-size: contain;
-    padding-bottom: 300px;
-}
-}
+
 
 
 /* Classes sobrescritas do bootstrap */
@@ -86,6 +81,8 @@ footer {
     background-color: #354338;
     color: #fff;
     cursor: pointer;
+    animation: zoomIn 0.5s ease-in forwards;
+
 }
 
 .page-link {
@@ -156,7 +153,7 @@ ul {
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    animation: exemplo 5s infinite alternate;
+    animation: holofote 5s infinite alternate;
     filter: blur(100px);
 }
 
@@ -165,7 +162,7 @@ ul {
     right:0;
 }
 
-@keyframes exemplo {
+@keyframes holofote {
     0%{
         transform: rotateY(30deg) rotate(-25deg) translateZ(100px);
     }
@@ -181,4 +178,47 @@ ul {
     100%{
         transform: rotateX(20deg) translateZ(0);
     }
+}
+
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(0.1); /* Começa bem pequeno */
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1); /* Tamanho original */
+    opacity: 1;
+  }
+}
+
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+
+@media (max-width: 777px) {
+    .detail {
+    background-size: contain;
+    padding-bottom: 300px;
+}
+}
+
+
+@media (max-width: 400px) {
+    .detail {
+    padding-bottom: 200px;
+}
+}
+
+@media (min-width:401px) and (max-width: 802px) {
+    .detail {
+    padding-bottom: 300px;
+}
 }
