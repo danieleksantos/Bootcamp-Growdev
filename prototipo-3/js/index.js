@@ -1,16 +1,17 @@
 document.addEventListener('DOMContentLoaded', main)
+window.addEventListener('DOMContentLoaded', observeFooter);
+
 
 async function main() {
   loadMainContent(1);
-  renderFooterData();
 }
 
-let allCharacters = []; // Variável para armazenar todos os personagens
+let allCharacters = [];
 
 document.getElementById("search-input").addEventListener("input", handleSearch);
 
 async function handleSearch(event) {
-  const searchTerm = event.target.value.toLowerCase(); // Converte para minúsculas 
+  const searchTerm = event.target.value.toLowerCase(); 
   const filteredCharacters = allCharacters.filter(character =>
     character.name.toLowerCase().includes(searchTerm)
   );
