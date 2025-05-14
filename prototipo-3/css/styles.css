@@ -87,3 +87,98 @@ footer {
     color: #fff;
     cursor: pointer;
 }
+
+.page-link {
+    color: #fff;
+    background-color: #5acb4e;
+    border: #5acb4e;
+    border-radius: 30px;
+    font-size: 20px;
+    margin:10px;
+    padding: 10px 20px;
+}
+
+.page-item:first-child .page-link {
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+.page-item:last-child .page-link {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+.page-link:hover {
+    color: #5acb4e;
+    background-color:#fff ;
+    border: #fff;
+}
+
+.page-link:focus,
+.page-link:focus-visible {
+  border: 1px solid #5acb4e;
+  box-shadow: 0 0 0 0.25rem rgba(90, 203, 78, 0.5); 
+  outline: none;
+}
+
+#btn-return {
+    color: #fff;
+    background-color: #5acb4e;
+    border: #5acb4e;
+    border-radius: 30px;
+    font-size: 20px;
+    margin:10px;
+    padding: 10px 20px;
+}
+
+
+#btn-return:hover {
+    color: #5acb4e;
+    background-color:#fff ;
+    border: #fff;
+}
+
+#btn-return:focus,
+#btn-return:focus-visible {
+  border: 1px solid #5acb4e;
+  box-shadow: 0 0 0 0.25rem rgba(90, 203, 78, 0.5);
+  outline: none;
+}
+
+ul {
+    margin-left: 6rem;
+}
+
+
+.box {
+    position: absolute;
+    background: linear-gradient(90deg, #5acb4e, #fff);
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    animation: exemplo 5s infinite alternate;
+    filter: blur(100px);
+}
+
+.box-position {
+    top: 0;
+    right:0;
+}
+
+@keyframes exemplo {
+    0%{
+        transform: rotateY(30deg) rotate(-25deg) translateZ(100px);
+    }
+    25%{
+        transform: rotateY(-30deg) rotateZ(100px);
+    }
+    50%{
+        transform: rotateX(-50deg) translateZ(-100px);
+    }
+    75%{
+        transform: rotateX(-50deg) translateZ(-100px);
+    }
+    100%{
+        transform: rotateX(20deg) translateZ(0);
+    }
+}

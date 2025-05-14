@@ -17,13 +17,14 @@
   <header class="container-fluid mb-5">
     <nav class="navbar bg-body-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/index.html">
-          <img src="assets/images/RICK_MORTY_ICON-01.svg" alt="icone Ricky And Morty" width="40" height="40">
+        <a class="navbar-brand" href="\prototipo-3\index.html">
+          <img src="assets/images/RICK_MORTY_ICON-01.svg" alt="icone Ricky And Morty" width="50" height="50">
         </a>
+        <div class="box"></div>
       </div>
     </nav>
 
-    <section class="container py-5">
+    <section class="container py-4">
       <div class="row justify-content-center g-5">
         <div class="col-12 text-center">
           <h1 class="display-1 fw-bolder main-title">
@@ -32,8 +33,13 @@
         </div>
         <div class="col-12 col-md-10 col-xl-8">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Pesquise" aria-label="Pesquise um personagem"
-              aria-describedby="icon-search">
+            <input 
+            type="text"
+            class="form-control"
+            id="search-input"
+            placeholder="Pesquise"
+            aria-label="Pesquise um personagem"
+            aria-describedby="icon-search">
             <span class="input-group-text" id="icon-search">
               <i class="bi bi-search"></i>
             </span>
@@ -49,9 +55,9 @@
         <!--lista de personagens pelo JS-->
       </div>
     </section>
-          <nav aria-label="Page navigation example" id="pagination">
-        <!--paginação construída pelo JS-->
-      </nav>
+    <div aria-label="Page navigation example" id="pagination">
+      <!--paginação construída pelo JS-->
+    </div>
   </main>
 
   <footer class="container-fluid pt-5">
@@ -71,7 +77,7 @@
       <div class="row fw-bolder copy">
         <div class="col-12">
           <p>
-            <small>Desenvolvido por: <span class="text-light" id="dev-name"></span> em 
+            <small>Desenvolvido por: <span class="text-light" id="dev-name"></span> em
               <span class="text-light" id="current-year"></span></small>
           </p>
         </div>

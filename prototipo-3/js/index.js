@@ -1,14 +1,27 @@
 document.addEventListener('DOMContentLoaded', main)
 
-async function main(params) {
+async function main() {
   loadMainContent(1);
   renderFooterData();
 }
 
+let allCharacters = []; // Variável para armazenar todos os personagens
+
+document.getElementById("search-input").addEventListener("input", handleSearch);
+
+async function handleSearch(event) {
+  const searchTerm = event.target.value.toLowerCase(); // Converte para minúsculas 
+  const filteredCharacters = allCharacters.filter(character =>
+    character.name.toLowerCase().includes(searchTerm)
+  );
+  renderCharactersList(filteredCharacters);
+}
+
 async function loadMainContent(page) {
   const result = await listCharacterByPage(page);
+  allCharacters = result.charactersList; // Armazena todos os personagens para busca futura
 
-  const characters = [...result.charactersList];
+  const characters = [...allCharacters];
 
   for (const character of characters) {
     const lastEpisodeUrl = character.episode[character.episode.length - 1];
@@ -21,14 +34,13 @@ async function loadMainContent(page) {
     };
   }
 
-  renderCharactersList(characters);
-  renderPagination(result.prevPage, result.nextPage);
-
+  renderCharactersList(characters); 
+  renderPagination(result.prevPage, result.nextPage); 
 }
 
 function renderCharactersList(characters) {
   const row = document.getElementById("list-characters");
-  row.innerHTML = "";
+  row.innerHTML = "";  
 
   characters.forEach((character, index) => {
     let nameCharacter = character.name;
@@ -36,40 +48,41 @@ function renderCharactersList(characters) {
     if (nameCharacter.length > 18) {
       nameCharacter = nameCharacter.slice(0, 18).concat("...");
     }
+
     const card = `
-          <div class="card mb-3 card-character" onclick="viewCharacterDetail(${character.id})">
-            <div class="row g-0">
-              <div class="col-12 col-md-5">
-                <div class="object-fit-fill border rounded h-100">
-                  <img src="${character.image}" class="w-100 h-100 rounded" alt="Foto do personagem ${character.name}">
-                </div>
-              </div>
-              <div class="col-12 col-md-7">
-                <div class="card-body fw-bolder">
-                  <h5 class="card-title">${nameCharacter}</h5>
-
-                  <p class="card-text">
-                    <small>
-                      <i id="circle-status" class="bi bi-circle-fill text-${mapStatus(character.status).color}"></i>
-                      <span>${mapStatus(character.status).text} - ${mapSpecie(character.species)}</span>
-                    </small>
-                  </p>
-
-                  <p class="card-text">
-                    <small class="text-secondary">Última localização conhecida:</small>
-                    <br>
-                    <small>${character.location.name}</small>
-                  </p>
-                  <p class="card-text">
-                    <small class="text-secondary">Visto a última vez em:</small>
-                    <br>
-                    <small>${character.episode.name}</small>
-                  </p>
-                </div>
-              </div>
+      <div class="card mb-3 card-character" onclick="viewCharacterDetail(${character.id})">
+        <div class="row g-0">
+          <div class="col-12 col-md-5">
+            <div class="object-fit-fill border rounded h-100">
+              <img src="${character.image}" class="w-100 h-100 rounded" alt="Foto do personagem ${character.name}">
             </div>
           </div>
-      `;
+          <div class="col-12 col-md-7">
+            <div class="card-body fw-bolder">
+              <h5 class="card-title">${nameCharacter}</h5>
+
+              <p class="card-text">
+                <small>
+                  <i id="circle-status" class="bi bi-circle-fill text-${mapStatus(character.status).color}"></i>
+                  <span>${mapStatus(character.status).text} - ${mapSpecie(character.species)}</span>
+                </small>
+              </p>
+
+              <p class="card-text">
+                <small class="text-secondary">Última localização conhecida:</small>
+                <br>
+                <small>${character.location.name}</small>
+              </p>
+              <p class="card-text">
+                <small class="text-secondary">Visto a última vez em:</small>
+                <br>
+                <small>${character.episode.name}</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
 
     const col = document.createElement('div');
     col.classList.add("col-12", "col-md-6");
@@ -77,10 +90,10 @@ function renderCharactersList(characters) {
     col.innerHTML = card;
     row.appendChild(col);
 
+    
     if (index === 18) {
       const colEmpty = document.createElement("div");
       colEmpty.classList.add("col-12", "col-md-6");
-      
       row.appendChild(colEmpty);
     }
   });
@@ -90,11 +103,11 @@ function renderPagination(prevPage, nextPage) {
   const prevPageNumber = !prevPage ? 0 : prevPage.split("?page=")[1];
   const nextPageNumber = !nextPage ? 0 : nextPage.split("?page=")[1];
 
-  const nav = document.getElementById("pagination");
-  nav.innerHTML = "";
+  const div = document.getElementById("pagination");
+  div.innerHTML = "";
 
   const ul = document.createElement("ul")
-  ul.classList.add("pagination", "justify-content-center");
+  ul.classList.add("pagination");
 
   const liPreviPage = document.createElement("li");
   liPreviPage.classList.add("page-item");
@@ -129,7 +142,7 @@ function renderPagination(prevPage, nextPage) {
   ul.appendChild(liPreviPage);
   ul.appendChild(liNextPage);
 
-  nav.appendChild(ul);
+  div.appendChild(ul);
 }
 
 function viewCharacterDetail(characterId) {
