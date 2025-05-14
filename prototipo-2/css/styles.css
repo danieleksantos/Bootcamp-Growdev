@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.main-title {
+    color: #105718;
+}
+
+#circle-status {
+    font-size: 10px;
+    display: inline-block;
+    margin-right: 4px;
+}
+
+.copy {
+    margin-top: 128px;
+}
+
+footer {
+    background-color: #1f2821;
+    color: #4c9c4a;
+}
+
+.main-content{
+    background-color: #252525;
+    background-image: url(../assets/images/FUNDO_2.jpg);
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    padding-bottom: 500px;
+    padding-top: 60px;
+}
+
+.detail {
+    background-size: cover;
+}
+
+@media (max-width: 992px) {
+    .main-content{
+        padding-bottom: 250px;
+    }
+
+    .detail {
+    background-size: contain;
+}
+}
+
+/* Classes sobrescritas do bootstrap */
+
+.form-control {
+    border-right: none;
+}
+
+.form-control:focus {
+    border-color:#dddddd;
+    box-shadow: 0 0 0 0;
+    border-right: none;
+}
+
+.input-group-text {
+    background-color: transparent;
+    color:#62ab60;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bolder;
+    margin-bottom: 2px;
+}
+
+
+.card {
+    background-color:transparent;
+    color: #fff;
+    cursor: pointer;
+    --bs-card-border-color: green;
+}
